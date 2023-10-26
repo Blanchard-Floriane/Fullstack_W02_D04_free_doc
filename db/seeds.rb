@@ -2,7 +2,11 @@ require 'faker'
 
 Doctor.destroy_all
 Patient.destroy_all
-Appointment.destroy_all#=> comme ça à chaque phase de test ça ne me génère pas mille instances
+Appointment.destroy_all
+City.destroy_all
+Specialty.destroy_all
+TransitionSpecialtyDoctor.destroy_all
+#=> comme ça à chaque phase de test ça ne me génère pas mille instances
 
 5.times do |index|
   City.create!(
@@ -11,8 +15,11 @@ Appointment.destroy_all#=> comme ça à chaque phase de test ça ne me génère 
 end
 
 5.times do |index|
-   Doctor.create!(first_name: Faker::Name.first_name,
-    last_name: Faker::Name.last_name, specialty: ["Family medicine", "Pediatrician", "Cardiologist", "Pulmonologist", "Dermatologist"].sample, zip_code: Faker::Address.zip_code, city: City.all.sample
+   Doctor.create!(
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name,
+    zip_code: Faker::Address.zip_code,
+    city: City.all.sample
     )
 end
 
@@ -30,3 +37,15 @@ end
    )
 end
 
+5.times do |index|
+  Specialty.create!(
+    name: ["Family medicine", "Pediatrician", "Cardiologist", "Pulmonologist", "Dermatologist"].sample
+   )
+end
+
+7.times do |index|
+  TransitionSpecialtyDoctor.create!(
+    doctor: Doctor.all.sample,
+    specialty: Specialty.all.sample
+  )
+end

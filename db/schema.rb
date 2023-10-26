@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_10_26_112517) do
+ActiveRecord::Schema[7.1].define(version: 2023_10_26_132251) do
   create_table "appointments", force: :cascade do |t|
     t.datetime "date"
     t.integer "doctor_id"
@@ -32,7 +32,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_26_112517) do
   create_table "doctors", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
-    t.string "specialty"
     t.string "zip_code"
     t.integer "city_id"
     t.datetime "created_at", null: false
@@ -47,6 +46,21 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_26_112517) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["city_id"], name: "index_patients_on_city_id"
+  end
+
+  create_table "specialties", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "transition_specialty_doctors", force: :cascade do |t|
+    t.integer "doctor_id"
+    t.integer "specialty_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["doctor_id"], name: "index_transition_specialty_doctors_on_doctor_id"
+    t.index ["specialty_id"], name: "index_transition_specialty_doctors_on_specialty_id"
   end
 
 end
